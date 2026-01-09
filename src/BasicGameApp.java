@@ -64,6 +64,7 @@ public class BasicGameApp implements Runnable {
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
+        forestPic = Toolkit.getDefaultToolkit().getImage("download.jpg");
 		astro = new Astronaut(10,100);
 
 
@@ -144,6 +145,7 @@ public class BasicGameApp implements Runnable {
 
       //draw the image of the astronaut
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+        g.drawImage(forestPic, astro.xpos, astro.ypos, astro.width, astro.height);
 
 		g.dispose();
 
