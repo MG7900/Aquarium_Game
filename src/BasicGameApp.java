@@ -40,10 +40,13 @@ public class BasicGameApp implements Runnable {
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
     public Image forestPic;
+    public Image Tagger1Pic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	private Astronaut astro;
+	public Tagger_1 tag1;
+    public Tagger_2 tag2;
+
 
 
    // Main method definition
@@ -64,10 +67,19 @@ public class BasicGameApp implements Runnable {
        
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
-        forestPic = Toolkit.getDefaultToolkit().getImage("Forest.jpg");
-		astro = new Astronaut(10,100);
 
+        forestPic = Toolkit.getDefaultToolkit().getImage("Forest.jpg");
+        Tagger1Pic = Toolkit.getDefaultToolkit().getImage("Tagger_1.jpg");
+
+        tag1 = new Tagger_1(10,100);
+        tag1.dx = 10;
+        tag1.dy = 50;
+
+        tag2 = new Tagger_2(100,10);
+        tag2.dx = -10;
+        tag2.dy = -10;
+
+        //add stuff!!
 
 	}// BasicGameApp()
 
@@ -94,7 +106,11 @@ public class BasicGameApp implements Runnable {
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-		astro.move();
+		tag1.move();
+        tag2.move();
+//        Freeze_Buff.move();
+        //Slow_Buff.move();
+        //Speed_Buff.move();
 
 	}
 	
@@ -144,8 +160,8 @@ public class BasicGameApp implements Runnable {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
-      //draw the image of the astronaut
-		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+      //draw the image of the taggers and the forest backgrounds
+        g.drawImage(Tagger1Pic, tag1.xpos, tag1.ypos, tag1.width, tag1.height, null);
 
         //the background below is set in position
         g.drawImage(forestPic, 0, 0, 1000, 800,null);
