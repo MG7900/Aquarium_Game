@@ -9,7 +9,7 @@ public class Tagger_1 {
     public int dy;
     public int width;
     public int height;
-    public boolean isAlive;
+
     public Rectangle hitbox;
 
     public Tagger_1(int pXpos, int pYpos) {
@@ -19,12 +19,12 @@ public class Tagger_1 {
         dy = 0;
         width = 60;
         height = 60;
-        isAlive = true;
+
         hitbox = new Rectangle(xpos, ypos, 55, 77);
     }
 
     public void move(){
-        //this tagger wraps around the map
+        //this tagger warps around the map
         if(ypos > 700){
             ypos = 0;
         }

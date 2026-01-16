@@ -8,17 +8,20 @@ public class Freeze_Buff {
     public int dy;
     public int width;
     public int height;
-    public boolean isAlive;
+    public boolean isAvailable;
     public Rectangle hitbox;
 
     public Freeze_Buff(int pXpos, int pYpos) {
+        //the freeze buff should randomize anywhere on the map at the start and after each time it is used
+
+        //using the randx and randy now in BGA to randomize position? Do I still need the pXpos and pYpos?
         xpos = pXpos;
         ypos = pYpos;
         dx = 15;
         dy = 15;
         width = 60;
         height = 60;
-        isAlive = true;
+        isAvailable = true;
         hitbox = new Rectangle(xpos, ypos, 55, 77);
     }
 

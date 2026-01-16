@@ -62,7 +62,8 @@ public class BasicGameApp implements Runnable {
    // This section is the setup portion of the program
    // Initialize your variables and construct your program objects here.
 	public BasicGameApp() {
-      
+        int randx = (int)(Math.random()*10);
+        int randy = (int)(Math.random()*10);
       setUpGraphics();
        
       //variable and objects
@@ -113,7 +114,14 @@ public class BasicGameApp implements Runnable {
         //Speed_Buff.move();
 
 	}
-	
+	//when the nazguls(taggers) catches frodo(the escaping main characters)
+    public void catching(){
+        if(tag1.hitbox.intersects(Runner.hitbox) || tag2.hitbox.intersects()){
+            System.out.println("Caught Frodo!");
+
+    }
+
+
    //Pauses or sleeps the computer for the amount specified in milliseconds
    public void pause(int time ){
    		//sleep

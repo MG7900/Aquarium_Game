@@ -1,4 +1,6 @@
-public class Aquarium_Game {
+import java.awt.*;
+
+public class Runner {
 
 
     //TAG GAME
@@ -18,8 +20,11 @@ public class Aquarium_Game {
     public int width;
     public int height;
     public boolean isAlive;
+    public Rectangle hitbox;
 
-    public Aquarium_Game(int pXpos, int pYpos) {
+    public Runner(int pXpos, int pYpos) {
+        //this will be temporary following the LOTR storylines until I think of a better idea
+        name = "Frodo";
         xpos = pXpos;
         ypos = pYpos;
         dx = 1;
@@ -27,6 +32,22 @@ public class Aquarium_Game {
         width = 60;
         height = 60;
         isAlive = true;
+        hitbox = new Rectangle(xpos, ypos, 55, 77);
     }
+    public void move(){
+        //the runner shall also warp around the map
+        if(ypos > 700){
+            ypos = 0;
+        }
+        if(ypos < 0){
+            ypos = 700;
+        }
 
+        if(xpos > 850){
+            xpos = 0;
+        }
+        if(xpos < 0){
+            xpos = 850;
+        }
+    }
 }

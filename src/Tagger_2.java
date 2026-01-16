@@ -10,7 +10,7 @@ public class Tagger_2 {
     public int dy;
     public int width;
     public int height;
-    public boolean isAlive;
+
     public Rectangle hitbox;
 
     public Tagger_2(int pXpos, int pYpos) {
@@ -20,7 +20,7 @@ public class Tagger_2 {
         dy = 10;
         width = 60;
         height = 60;
-        isAlive = true;
+
     }
 
     public void move(){
