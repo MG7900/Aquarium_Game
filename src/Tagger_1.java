@@ -9,7 +9,6 @@ public class Tagger_1 {
     public int dy;
     public int width;
     public int height;
-
     public Rectangle hitbox;
 
     public Tagger_1(int pXpos, int pYpos) {

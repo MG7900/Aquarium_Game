@@ -17,8 +17,8 @@ public class Freeze_Buff {
         //using the randx and randy now in BGA to randomize position? Do I still need the pXpos and pYpos?
         xpos = pXpos;
         ypos = pYpos;
-        dx = 15;
-        dy = 15;
+        dx = (int) (Math.random() * 1)+1;;
+        dy = (int) (Math.random() * 10)+1;
         width = 60;
         height = 60;
         isAvailable = true;
