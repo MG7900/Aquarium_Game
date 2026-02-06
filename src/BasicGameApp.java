@@ -116,9 +116,10 @@ public class BasicGameApp implements Runnable {
         //calls the move( ) code in the objects
         tag1.move();
         tag2.move();
-//        Freeze_Buff.move();
-        //Slow_Buff.move();
-        //Speed_Buff.move();
+        //why is this showing me errors?
+        Freeze_Buff.move();
+        Slow_Buff.move();
+        Speed_Buff.move();
 
     }
 
@@ -127,6 +128,53 @@ public class BasicGameApp implements Runnable {
         if (tag1.hitbox.intersects(runner.hitbox) || tag2.hitbox.intersects(runner.hitbox)) {
             System.out.println("Caught Frodo!");
 
+
+        }
+    }
+
+    //Below are the Buff effects and their interactions
+
+    public void getting_FreezeBuff(){
+        if (runner.hitbox.intersects(Freeze_Buff.hitbox)) {
+            System.out.println("Frodo gets Freeze Buff");
+            runner.dx = runner.dx-10;
+            runner.dy = runner.dy-10;
+            !Freeze_Buff.isAvailable;
+
+        }
+        if (tag1.hitbox.intersects(Freeze_Buff.hitbox)) {
+            System.out.println("Tagger 1 gets Freeze Buff");
+            //for 5 seconds
+
+            !Freeze_Buff.isAvailable;
+        }
+        if (tag2.hitbox.intersects(Freeze_Buff.hitbox)) {
+            System.out.println("Tagger 2 gets Freeze Buff");
+            !Freeze_Buff.isAvailable;
+
+        }
+    }
+
+    public void getting_SpeedBuff(){
+        if (runner.hitbox.intersects(Speed_Buff_Buff.hitbox)) {
+            System.out.println("Frodo Speed Buffed");
+            runner.dx = runner.dx + 10;
+            Speed_Buff.isAvailable == false;
+
+        }
+        if (tag1.hitbox.intersects(Speed_Buff_Buff.hitbox)) {
+            System.out.println("Tagger 2 Speed Buffed");
+            //for 5 seconds
+            tag1.dx = tag1.dx + 10;
+            tag1.dy = tag1.dy + 10;
+            Speed_Buff.isAvailable == false;
+
+        }
+        if (tag2.hitbox.intersects(Speed_Buff.hitbox)) {
+            System.out.println("Tagger 1 Speed Buffed");
+            tag2.dx = tag2.dx + 10;
+            tag2.dy = tag2.dy + 10;
+            Speed_Buff.isAvailable == false;
         }
     }
 

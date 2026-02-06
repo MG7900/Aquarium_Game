@@ -8,7 +8,7 @@ public class Freeze_Buff {
     public int dy;
     public int width;
     public int height;
-    public boolean isAvailable;
+    public static boolean isAvailable;
     public Rectangle hitbox;
 
     public Freeze_Buff(int pXpos, int pYpos) {

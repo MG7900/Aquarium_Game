@@ -18,7 +18,6 @@ public class Tagger_1 {
         dy = 0;
         width = 60;
         height = 60;
-
         hitbox = new Rectangle(xpos, ypos, 55, 77);
     }
 

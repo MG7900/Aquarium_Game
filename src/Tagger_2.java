@@ -20,7 +20,7 @@ public class Tagger_2 {
         dy = 10;
         width = 60;
         height = 60;
-
+        hitbox = new Rectangle(xpos, ypos, 55, 77);
     }
 
     public void move(){
