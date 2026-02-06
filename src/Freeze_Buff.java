@@ -22,7 +22,7 @@ public class Freeze_Buff {
         width = 60;
         height = 60;
         isAvailable = true;
-        hitbox = new Rectangle(xpos, ypos, 55, 77);
+        hitbox = new Rectangle(xpos, ypos, 60, 60);
     }
 
     public void move(){
@@ -40,5 +40,8 @@ public class Freeze_Buff {
         if(xpos < 0){
             xpos = 850;
         }
+        xpos = xpos + dx;
+        ypos = ypos + dy;
+        hitbox = new Rectangle(xpos, ypos, width, height);
     }
 }

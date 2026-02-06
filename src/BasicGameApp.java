@@ -39,17 +39,23 @@ public class BasicGameApp implements Runnable {
     public JPanel panel;
 
     public BufferStrategy bufferStrategy;
-    public Image astroPic;
+
     public Image forestPic;
     public Image Tagger1Pic;
     public Image Tagger2Pic;
     public Image RunnerPic;
+    public Image FreezePic;
+    public Image SpeedPic;
+
 
     //Declare the objects used in the program
     //These are things that are made up of more than one variable type
     public Tagger_1 tag1;
     public Tagger_2 tag2;
     public Runner runner;
+    public Freeze_Buff freezeBuff;
+    public Speed_Buff speedBuff;
+    //public Slow_Buff slowBuff;
 
 
     // Main method definition
@@ -76,6 +82,8 @@ public class BasicGameApp implements Runnable {
         Tagger1Pic = Toolkit.getDefaultToolkit().getImage("Tagger_1.jpg");
         Tagger2Pic = Toolkit.getDefaultToolkit().getImage("Tagger_2.jpg");
         RunnerPic = Toolkit.getDefaultToolkit().getImage("Frodo.jpg");
+        FreezePic = Toolkit.getDefaultToolkit().getImage("Freeze.png");
+        SpeedPic = Toolkit.getDefaultToolkit().getImage("Speed.png");
 
         tag1 = new Tagger_1(10, 100);
         tag1.dx = 10;
@@ -87,8 +95,12 @@ public class BasicGameApp implements Runnable {
 
         runner = new Runner(500, 400);
 
-
+        freezeBuff = new Freeze_Buff(100, 100);
         //add stuff!!
+
+        speedBuff = new Speed_Buff(200,200);
+
+        //slow Buff
 
     }// BasicGameApp()
 
@@ -116,10 +128,14 @@ public class BasicGameApp implements Runnable {
         //calls the move( ) code in the objects
         tag1.move();
         tag2.move();
+        runner.move();
+
         //why is this showing me errors?
-        Freeze_Buff.move();
-        Slow_Buff.move();
-        Speed_Buff.move();
+        freezeBuff.move();
+        speedBuff.move();
+//slow Buff
+        getting_FreezeBuff();
+        getting_SpeedBuff();
 
     }
 
@@ -135,46 +151,46 @@ public class BasicGameApp implements Runnable {
     //Below are the Buff effects and their interactions
 
     public void getting_FreezeBuff(){
-        if (runner.hitbox.intersects(Freeze_Buff.hitbox)) {
+        if (runner.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Frodo gets Freeze Buff");
             runner.dx = runner.dx-10;
             runner.dy = runner.dy-10;
-            !Freeze_Buff.isAvailable;
+            freezeBuff.isAvailable = false;
 
         }
-        if (tag1.hitbox.intersects(Freeze_Buff.hitbox)) {
+        if (tag1.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Tagger 1 gets Freeze Buff");
             //for 5 seconds
 
-            !Freeze_Buff.isAvailable;
+            freezeBuff.isAvailable = false;
         }
-        if (tag2.hitbox.intersects(Freeze_Buff.hitbox)) {
+        if (tag2.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Tagger 2 gets Freeze Buff");
-            !Freeze_Buff.isAvailable;
+            freezeBuff.isAvailable = false;
 
         }
     }
 
     public void getting_SpeedBuff(){
-        if (runner.hitbox.intersects(Speed_Buff_Buff.hitbox)) {
+        if (runner.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Frodo Speed Buffed");
             runner.dx = runner.dx + 10;
-            Speed_Buff.isAvailable == false;
+            speedBuff.isAvailable = false;
 
         }
-        if (tag1.hitbox.intersects(Speed_Buff_Buff.hitbox)) {
+        if (tag1.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Tagger 2 Speed Buffed");
             //for 5 seconds
             tag1.dx = tag1.dx + 10;
             tag1.dy = tag1.dy + 10;
-            Speed_Buff.isAvailable == false;
+            speedBuff.isAvailable = false;
 
         }
-        if (tag2.hitbox.intersects(Speed_Buff.hitbox)) {
+        if (tag2.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Tagger 1 Speed Buffed");
             tag2.dx = tag2.dx + 10;
             tag2.dy = tag2.dy + 10;
-            Speed_Buff.isAvailable == false;
+            speedBuff.isAvailable = false;
         }
     }
 
@@ -226,10 +242,14 @@ public class BasicGameApp implements Runnable {
             //draw backgroup first of all
             g.drawImage(forestPic, 0, 0, 1000, 800, null);
 
-            g.drawImage(RunnerPic, 500, 400, tag1.width, tag1.height, null);
+            g.drawImage(RunnerPic, 100, 100, tag1.width, tag1.height, null);
             //draw the image of the taggers and the forest backgrounds
-            g.drawImage(Tagger1Pic, 500, 400, tag1.width, tag1.height, null);
+            g.drawImage(Tagger1Pic, 100, 400, tag1.width, tag1.height, null);
             g.drawImage(Tagger2Pic, 500, 400, tag1.width, tag1.height, null);
+            g.drawImage(FreezePic, 250, 250, freezeBuff.width, freezeBuff.height, null);
+            g.drawImage(FreezePic, 250, 250, speedBuff.width, speedBuff.height, null);
+            //speed buff draw image
+            //slow buff draw image
 
             g.dispose();
 

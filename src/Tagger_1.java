@@ -23,6 +23,9 @@ public class Tagger_1 {
 
     public void move(){
         //this tagger warps around the map
+
+
+
         if(ypos > 700){
             ypos = 0;
         }
@@ -36,6 +39,9 @@ public class Tagger_1 {
         if(xpos < 0){
             xpos = 850;
         }
+        xpos = xpos + dx;
+        ypos = ypos + dy;
+        hitbox = new Rectangle(xpos, ypos, width, height);
     }
 
 
