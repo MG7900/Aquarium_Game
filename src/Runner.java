@@ -19,7 +19,8 @@ public class Runner {
     public int dy;
     public int width;
     public int height;
-    public boolean isAlive;
+    public boolean isCaught;
+    public int lives;
     public Rectangle hitbox;
 
     public Runner(int pXpos, int pYpos) {
@@ -31,7 +32,10 @@ public class Runner {
         dy = 0;
         width = 110;
         height = 90;
-        isAlive = true;
+        isCaught = false;
+        lives = 3;
+        //when the runner has been caught 3 times, the game ends
+
         hitbox = new Rectangle(xpos, ypos, 40, 80);
     }
 

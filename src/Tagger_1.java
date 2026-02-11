@@ -25,19 +25,14 @@ public class Tagger_1 {
         //this tagger warps around the map
 
 
-        if(ypos > 700){
-            ypos = 0;
-        }
-        if(ypos < 0){
-            ypos = 700;
+        if(xpos < 0 || xpos > 950){
+            dx = -dx;
         }
 
-        if(xpos > 850){
-            xpos = 0;
+        if(ypos < 0 || ypos > 620){
+            dy = -dy;
         }
-        if(xpos < 0){
-            xpos = 850;
-        }
+
         xpos = xpos + dx;
         ypos = ypos + dy;
         hitbox = new Rectangle(xpos+15, ypos, 60, 80);

@@ -71,8 +71,8 @@ public class BasicGameApp implements Runnable {
     // This section is the setup portion of the program
     // Initialize your variables and construct your program objects here.
     public BasicGameApp() {
-        int randx = (int) (Math.random() * 10);
-        int randy = (int) (Math.random() * 10);
+        int randx = (int) (Math.random() * 600);
+        int randy = (int) (Math.random() * 600);
         setUpGraphics();
 
         //variable and objects
@@ -85,23 +85,25 @@ public class BasicGameApp implements Runnable {
         FreezePic = Toolkit.getDefaultToolkit().getImage("Freeze.png");
         SpeedPic = Toolkit.getDefaultToolkit().getImage("Speed.png");
 
-        tag1 = new Tagger_1(10, 100);
-        tag1.dx = -5;
-        tag1.dy = 5;
+        tag1 = new Tagger_1(250,100);
+        tag1.dx = 10;
+        tag1.dy = 10;
 
-        tag2 = new Tagger_2(100, 10);
-        tag2.dx = -5;
-        tag2.dy = -5;
+        tag2 = new Tagger_2(200, 600);
+        tag2.dx = -10;
+        tag2.dy = -10;
 
         runner = new Runner(100, 400);
         runner.dx = 5;
         runner.dy = -5;
 
 
-        freezeBuff = new Freeze_Buff(100, 100);
+        freezeBuff = new Freeze_Buff(randx, randy);
+        freezeBuff.dx = 5;
+        freezeBuff.dy = 5;
         //add stuff!!
 
-        speedBuff = new Speed_Buff(200,200);
+//        speedBuff = new Speed_Buff(200,200);
 
         //slow Buff
 
@@ -131,11 +133,12 @@ public class BasicGameApp implements Runnable {
         //calls the move( ) code in the objects
         tag1.move();
         tag2.move();
-
+        catching();
+        taggers_crashing();
         runner.move();
 
-        //why is this showing me errors?
-//        freezeBuff.move();
+        //Below are the buffs
+        freezeBuff.move();
 //        speedBuff.move();
 //slow Buff
 
@@ -146,45 +149,63 @@ public class BasicGameApp implements Runnable {
     public void taggers_crashing(){
         if(tag1.hitbox.intersects(tag2.hitbox)){
             System.out.println("Taggers crashing!");
-            tag1.dx = -tag1.dx;
-            tag1.dy = -tag1.dy;
+            System.out.println("Tag1: " + tag1.xpos + tag1.ypos);
+            System.out.println("Tag2: " + tag2.xpos + tag2.ypos);
 
-            tag2.dx = -tag2.dx;
-            tag2.dy = -tag2.dy;
+
+            //center the xpos and ypos of the objects intp the center
+            int x = Math.abs(tag1.xpos-tag2.xpos);
+            int y = Math.abs(tag1.ypos-tag2.ypos);
+
+            //the taggers will bounce off of each other based on the direction they interact
+            if(x > y){
+                //here EXPLANATION
+                tag1.dx = -tag1.dx;
+                tag2.dx = -tag2.dx;
+            } else if ( x < y) {
+                //here EXPLANATION
+                tag1.dy = -tag1.dy;
+                tag2.dy = -tag2.dy;
+            }
         }
     }
 
     //when the nazguls(taggers) catches frodo(the escaping main characters)
-//    public void catching() {
-//        if (tag1.hitbox.intersects(runner.hitbox) || tag2.hitbox.intersects(runner.hitbox)) {
-//            System.out.println("Caught Frodo!");
-//
-//
-//        }
-//    }
+    public void catching() {
+        if (tag1.hitbox.intersects(runner.hitbox) || tag2.hitbox.intersects(runner.hitbox)) {
+            System.out.println("Caught Frodo!");
+            //add some consequences e.g. a heart disapperas etc;
+
+        }
+    }
 
 //    //Below are the Buff effects and their interactions
 //
-//    public void getting_FreezeBuff(){
-//        if (runner.hitbox.intersects(freezeBuff.hitbox)) {
-//            System.out.println("Frodo gets Freeze Buff");
-//            runner.dx = runner.dx-10;
-//            runner.dy = runner.dy-10;
-//            freezeBuff.isAvailable = false;
-//
-//        }
-//        if (tag1.hitbox.intersects(freezeBuff.hitbox)) {
-//            System.out.println("Tagger 1 gets Freeze Buff");
-//            //for 5 seconds
-//
-//            freezeBuff.isAvailable = false;
-//        }
-//        if (tag2.hitbox.intersects(freezeBuff.hitbox)) {
-//            System.out.println("Tagger 2 gets Freeze Buff");
-//            freezeBuff.isAvailable = false;
-//
-//        }
-//    }
+    public void getting_FreezeBuff(){
+        if (runner.hitbox.intersects(freezeBuff.hitbox)) {
+            System.out.println("Frodo gets Freeze Buff");
+            freezeBuff.isAvailable = false;
+
+            //set a counter
+            if(int t = )) {
+                runner.dx = 0;
+                runner.dy = 0;
+            }
+
+        }
+        if (tag1.hitbox.intersects(freezeBuff.hitbox)) {
+            System.out.println("Tagger 1 gets Freeze Buff");
+            freezeBuff.isAvailable = false;
+
+
+        }
+        if (tag2.hitbox.intersects(freezeBuff.hitbox)) {
+            System.out.println("Tagger 2 gets Freeze Buff");
+            freezeBuff.isAvailable = false;
+            pause(3000);
+
+        }
+    }
 //
 //    public void getting_SpeedBuff(){
 //        if (runner.hitbox.intersects(speedBuff.hitbox)) {
@@ -267,8 +288,10 @@ public class BasicGameApp implements Runnable {
             g.drawImage(Tagger2Pic, tag2.xpos, tag2.ypos, tag1.width, tag1.height, null);
             g.drawRect(tag2.hitbox.x, tag2.hitbox.y, tag2.hitbox.width, tag2.hitbox.height);
 
-//            g.drawImage(FreezePic, 250, 250, freezeBuff.width, freezeBuff.height, null);
-//            g.drawImage(FreezePic, 250, 250, speedBuff.width, speedBuff.height, null);
+            //current issue, no response when characters interact with the freeze buff 2026/2/11
+            g.drawImage(FreezePic, freezeBuff.xpos, freezeBuff.ypos, freezeBuff.width, freezeBuff.height, null);
+            g.drawRect(freezeBuff.hitbox.x, freezeBuff.hitbox.y, freezeBuff.hitbox.width, freezeBuff.hitbox.height);
+
             //speed buff draw image
             //slow buff draw image
 
