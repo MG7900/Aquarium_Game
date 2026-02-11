@@ -18,9 +18,9 @@ public class Tagger_2 {
         ypos = pYpos;
         dx = 10;
         dy = 10;
-        width = 60;
-        height = 60;
-        hitbox = new Rectangle(xpos, ypos, 55, 77);
+        width = 110;
+        height = 110;
+        hitbox = new Rectangle(xpos, ypos, 120, 120);
     }
 
     public void move(){
@@ -40,6 +40,6 @@ public class Tagger_2 {
         }
         xpos = xpos + dx;
         ypos = ypos + dy;
-        hitbox = new Rectangle(xpos, ypos, width, height);
+        hitbox = new Rectangle(xpos, ypos, 80, 80);
     }
 }

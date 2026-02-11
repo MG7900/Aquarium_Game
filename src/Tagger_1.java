@@ -16,14 +16,13 @@ public class Tagger_1 {
         ypos = pYpos;
         dx = 1;
         dy = 0;
-        width = 60;
-        height = 60;
-        hitbox = new Rectangle(xpos, ypos, 55, 77);
+        width = 90;
+        height = 90;
+        hitbox = new Rectangle(xpos, ypos, 90, 90);
     }
 
     public void move(){
         //this tagger warps around the map
-
 
 
         if(ypos > 700){
@@ -41,7 +40,7 @@ public class Tagger_1 {
         }
         xpos = xpos + dx;
         ypos = ypos + dy;
-        hitbox = new Rectangle(xpos, ypos, width, height);
+        hitbox = new Rectangle(xpos+15, ypos, 60, 80);
     }
 
 

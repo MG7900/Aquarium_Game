@@ -29,11 +29,12 @@ public class Runner {
         ypos = pYpos;
         dx = 1;
         dy = 0;
-        width = 60;
-        height = 60;
+        width = 110;
+        height = 90;
         isAlive = true;
-        hitbox = new Rectangle(xpos, ypos, 55, 77);
+        hitbox = new Rectangle(xpos, ypos, 40, 80);
     }
+
     public void move(){
         //the runner shall also warp around the map
         if(ypos > 700){
@@ -51,6 +52,6 @@ public class Runner {
         }
         xpos = xpos + dx;
         ypos = ypos + dy;
-        hitbox = new Rectangle(xpos, ypos, width, height);
+        hitbox = new Rectangle(xpos, ypos+20, 60, 70);
     }
 }

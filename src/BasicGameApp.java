@@ -80,20 +80,23 @@ public class BasicGameApp implements Runnable {
 
         forestPic = Toolkit.getDefaultToolkit().getImage("Forest.jpg");
         Tagger1Pic = Toolkit.getDefaultToolkit().getImage("Tagger_1.jpg");
-        Tagger2Pic = Toolkit.getDefaultToolkit().getImage("Tagger_2.jpg");
+        Tagger2Pic = Toolkit.getDefaultToolkit().getImage("Tagger_2.png");
         RunnerPic = Toolkit.getDefaultToolkit().getImage("Frodo.jpg");
         FreezePic = Toolkit.getDefaultToolkit().getImage("Freeze.png");
         SpeedPic = Toolkit.getDefaultToolkit().getImage("Speed.png");
 
         tag1 = new Tagger_1(10, 100);
-        tag1.dx = 10;
-        tag1.dy = 50;
+        tag1.dx = -5;
+        tag1.dy = 5;
 
         tag2 = new Tagger_2(100, 10);
-        tag2.dx = -10;
-        tag2.dy = -10;
+        tag2.dx = -5;
+        tag2.dy = -5;
 
-        runner = new Runner(500, 400);
+        runner = new Runner(100, 400);
+        runner.dx = 5;
+        runner.dy = -5;
+
 
         freezeBuff = new Freeze_Buff(100, 100);
         //add stuff!!
@@ -128,71 +131,83 @@ public class BasicGameApp implements Runnable {
         //calls the move( ) code in the objects
         tag1.move();
         tag2.move();
+
         runner.move();
 
         //why is this showing me errors?
-        freezeBuff.move();
-        speedBuff.move();
+//        freezeBuff.move();
+//        speedBuff.move();
 //slow Buff
-        getting_FreezeBuff();
-        getting_SpeedBuff();
 
+
+    }
+
+    //below makes sure that the taggers would bounce off eachother
+    public void taggers_crashing(){
+        if(tag1.hitbox.intersects(tag2.hitbox)){
+            System.out.println("Taggers crashing!");
+            tag1.dx = -tag1.dx;
+            tag1.dy = -tag1.dy;
+
+            tag2.dx = -tag2.dx;
+            tag2.dy = -tag2.dy;
+        }
     }
 
     //when the nazguls(taggers) catches frodo(the escaping main characters)
-    public void catching() {
-        if (tag1.hitbox.intersects(runner.hitbox) || tag2.hitbox.intersects(runner.hitbox)) {
-            System.out.println("Caught Frodo!");
+//    public void catching() {
+//        if (tag1.hitbox.intersects(runner.hitbox) || tag2.hitbox.intersects(runner.hitbox)) {
+//            System.out.println("Caught Frodo!");
+//
+//
+//        }
+//    }
 
-
-        }
-    }
-
-    //Below are the Buff effects and their interactions
-
-    public void getting_FreezeBuff(){
-        if (runner.hitbox.intersects(freezeBuff.hitbox)) {
-            System.out.println("Frodo gets Freeze Buff");
-            runner.dx = runner.dx-10;
-            runner.dy = runner.dy-10;
-            freezeBuff.isAvailable = false;
-
-        }
-        if (tag1.hitbox.intersects(freezeBuff.hitbox)) {
-            System.out.println("Tagger 1 gets Freeze Buff");
-            //for 5 seconds
-
-            freezeBuff.isAvailable = false;
-        }
-        if (tag2.hitbox.intersects(freezeBuff.hitbox)) {
-            System.out.println("Tagger 2 gets Freeze Buff");
-            freezeBuff.isAvailable = false;
-
-        }
-    }
-
-    public void getting_SpeedBuff(){
-        if (runner.hitbox.intersects(speedBuff.hitbox)) {
-            System.out.println("Frodo Speed Buffed");
-            runner.dx = runner.dx + 10;
-            speedBuff.isAvailable = false;
-
-        }
-        if (tag1.hitbox.intersects(speedBuff.hitbox)) {
-            System.out.println("Tagger 2 Speed Buffed");
-            //for 5 seconds
-            tag1.dx = tag1.dx + 10;
-            tag1.dy = tag1.dy + 10;
-            speedBuff.isAvailable = false;
-
-        }
-        if (tag2.hitbox.intersects(speedBuff.hitbox)) {
-            System.out.println("Tagger 1 Speed Buffed");
-            tag2.dx = tag2.dx + 10;
-            tag2.dy = tag2.dy + 10;
-            speedBuff.isAvailable = false;
-        }
-    }
+//    //Below are the Buff effects and their interactions
+//
+//    public void getting_FreezeBuff(){
+//        if (runner.hitbox.intersects(freezeBuff.hitbox)) {
+//            System.out.println("Frodo gets Freeze Buff");
+//            runner.dx = runner.dx-10;
+//            runner.dy = runner.dy-10;
+//            freezeBuff.isAvailable = false;
+//
+//        }
+//        if (tag1.hitbox.intersects(freezeBuff.hitbox)) {
+//            System.out.println("Tagger 1 gets Freeze Buff");
+//            //for 5 seconds
+//
+//            freezeBuff.isAvailable = false;
+//        }
+//        if (tag2.hitbox.intersects(freezeBuff.hitbox)) {
+//            System.out.println("Tagger 2 gets Freeze Buff");
+//            freezeBuff.isAvailable = false;
+//
+//        }
+//    }
+//
+//    public void getting_SpeedBuff(){
+//        if (runner.hitbox.intersects(speedBuff.hitbox)) {
+//            System.out.println("Frodo Speed Buffed");
+//            runner.dx = runner.dx + 10;
+//            speedBuff.isAvailable = false;
+//
+//        }
+//        if (tag1.hitbox.intersects(speedBuff.hitbox)) {
+//            System.out.println("Tagger 2 Speed Buffed");
+//            //for 5 seconds
+//            tag1.dx = tag1.dx + 10;
+//            tag1.dy = tag1.dy + 10;
+//            speedBuff.isAvailable = false;
+//
+//        }
+//        if (tag2.hitbox.intersects(speedBuff.hitbox)) {
+//            System.out.println("Tagger 1 Speed Buffed");
+//            tag2.dx = tag2.dx + 10;
+//            tag2.dy = tag2.dy + 10;
+//            speedBuff.isAvailable = false;
+//        }
+//    }
 
         //Pauses or sleeps the computer for the amount specified in milliseconds
         public void pause ( int time ){
@@ -240,14 +255,20 @@ public class BasicGameApp implements Runnable {
             Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
             g.clearRect(0, 0, WIDTH, HEIGHT);
             //draw backgroup first of all
-            g.drawImage(forestPic, 0, 0, 1000, 800, null);
+//            g.drawImage(forestPic, 0, 0, 1000, 800, null);
 
-            g.drawImage(RunnerPic, 100, 100, tag1.width, tag1.height, null);
+            g.drawImage(RunnerPic, runner.xpos, runner.ypos, runner.width, runner.height, null);
+            g.drawRect(runner.hitbox.x, runner.hitbox.y, runner.hitbox.width, runner.hitbox.height);
+
             //draw the image of the taggers and the forest backgrounds
-            g.drawImage(Tagger1Pic, 100, 400, tag1.width, tag1.height, null);
-            g.drawImage(Tagger2Pic, 500, 400, tag1.width, tag1.height, null);
-            g.drawImage(FreezePic, 250, 250, freezeBuff.width, freezeBuff.height, null);
-            g.drawImage(FreezePic, 250, 250, speedBuff.width, speedBuff.height, null);
+            g.drawImage(Tagger1Pic, tag1.xpos, tag1.ypos, tag1.width, tag1.height, null);
+            g.drawRect(tag1.hitbox.x, tag1.hitbox.y, tag1.hitbox.width, tag1.hitbox.height);
+
+            g.drawImage(Tagger2Pic, tag2.xpos, tag2.ypos, tag1.width, tag1.height, null);
+            g.drawRect(tag2.hitbox.x, tag2.hitbox.y, tag2.hitbox.width, tag2.hitbox.height);
+
+//            g.drawImage(FreezePic, 250, 250, freezeBuff.width, freezeBuff.height, null);
+//            g.drawImage(FreezePic, 250, 250, speedBuff.width, speedBuff.height, null);
             //speed buff draw image
             //slow buff draw image
 
