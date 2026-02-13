@@ -186,8 +186,8 @@ public class BasicGameApp implements Runnable {
             System.out.println("Frodo gets Freeze Buff");
             freezeBuff.isAvailable = false;
 
-            //set a counter
-            if(int t = )) {
+            //set a counter as a substitute for a timer
+            for(int t = 1; t < 100; t++) {
                 runner.dx = 0;
                 runner.dy = 0;
             }
@@ -196,39 +196,54 @@ public class BasicGameApp implements Runnable {
         if (tag1.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Tagger 1 gets Freeze Buff");
             freezeBuff.isAvailable = false;
+            for(int t = 1; t < 100; t++) {
+                tag1.dx = 0;
+                tag1.dy = 0;
+            }
 
 
         }
         if (tag2.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Tagger 2 gets Freeze Buff");
             freezeBuff.isAvailable = false;
-            pause(3000);
+            for(int t = 1; t < 100; t++) {
+                tag2.dx = 0;
+                tag2.dy = 0;
+            }
+
 
         }
     }
 //
-//    public void getting_SpeedBuff(){
-//        if (runner.hitbox.intersects(speedBuff.hitbox)) {
-//            System.out.println("Frodo Speed Buffed");
-//            runner.dx = runner.dx + 10;
-//            speedBuff.isAvailable = false;
-//
-//        }
-//        if (tag1.hitbox.intersects(speedBuff.hitbox)) {
-//            System.out.println("Tagger 2 Speed Buffed");
-//            //for 5 seconds
-//            tag1.dx = tag1.dx + 10;
-//            tag1.dy = tag1.dy + 10;
-//            speedBuff.isAvailable = false;
-//
-//        }
-//        if (tag2.hitbox.intersects(speedBuff.hitbox)) {
-//            System.out.println("Tagger 1 Speed Buffed");
-//            tag2.dx = tag2.dx + 10;
-//            tag2.dy = tag2.dy + 10;
-//            speedBuff.isAvailable = false;
-//        }
-//    }
+    public void getting_SpeedBuff(){
+        if (runner.hitbox.intersects(speedBuff.hitbox)) {
+            System.out.println("Frodo Speed Buffed");
+            speedBuff.isAvailable = false;
+            for(int x = 1; x<1000; x++){
+                runner.dx = runner.dx + 10;
+                runner.dy = runner.dy + 10;
+            }
+        }
+        if (tag1.hitbox.intersects(speedBuff.hitbox)) {
+            System.out.println("Tagger 2 Speed Buffed");
+            speedBuff.isAvailable = false;
+            for(int x = 1; x<1000; x++){
+                tag1.dx = tag1.dx + 10;
+                tag1.dy = tag1.dy + 10;
+            }
+
+
+        }
+        if (tag2.hitbox.intersects(speedBuff.hitbox)) {
+            System.out.println("Tagger 1 Speed Buffed");
+            speedBuff.isAvailable = false;
+            for(int x = 1; x<1000; x++){
+                tag2.dx = tag2.dx + 10;
+                tag2.dy = tag2.dy + 10;
+            }
+
+        }
+    }
 
         //Pauses or sleeps the computer for the amount specified in milliseconds
         public void pause ( int time ){
