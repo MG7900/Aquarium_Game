@@ -19,6 +19,9 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import static java.awt.Color.blue;
+import static java.awt.Color.red;
+
 
 //*******************************************************************************
 // Class Definition Section
@@ -46,6 +49,7 @@ public class BasicGameApp implements Runnable {
     public Image RunnerPic;
     public Image FreezePic;
     public Image SpeedPic;
+    public Image LifePic;
 
 
     //Declare the objects used in the program
@@ -55,6 +59,8 @@ public class BasicGameApp implements Runnable {
     public Runner runner;
     public Freeze_Buff freezeBuff;
     public Speed_Buff speedBuff;
+    public Slow_Buff slowBuff;
+    public Life life;
     //public Slow_Buff slowBuff;
 
 
@@ -84,6 +90,7 @@ public class BasicGameApp implements Runnable {
         RunnerPic = Toolkit.getDefaultToolkit().getImage("Frodo.jpg");
         FreezePic = Toolkit.getDefaultToolkit().getImage("Freeze.png");
         SpeedPic = Toolkit.getDefaultToolkit().getImage("Speed.png");
+        LifePic = Toolkit.getDefaultToolkit().getImage("Life.png");
 
         tag1 = new Tagger_1(250,100);
         tag1.dx = 10;
@@ -102,6 +109,12 @@ public class BasicGameApp implements Runnable {
         freezeBuff.dx = 5;
         freezeBuff.dy = 5;
         //add stuff!!
+
+        slowBuff = new Slow_Buff(100,100);
+        slowBuff.dx = -5;
+        slowBuff.dy = -10;
+
+        life = new Life(50,50);
 
 //        speedBuff = new Speed_Buff(200,200);
 
@@ -139,9 +152,11 @@ public class BasicGameApp implements Runnable {
 
         //Below are the buffs
         freezeBuff.move();
-//        speedBuff.move();
-//slow Buff
-
+        slowBuff.move();
+        speedBuff.move();
+        getting_SlowBuff();
+        getting_FreezeBuff();
+        getting_SpeedBuff();
 
     }
 
@@ -175,7 +190,8 @@ public class BasicGameApp implements Runnable {
         if (tag1.hitbox.intersects(runner.hitbox) || tag2.hitbox.intersects(runner.hitbox)) {
             System.out.println("Caught Frodo!");
             //add some consequences e.g. a heart disapperas etc;
-
+            life.lost_life = life.lost_life + 1;
+            //add animation for lost life lol in render
         }
     }
 
@@ -216,6 +232,36 @@ public class BasicGameApp implements Runnable {
     }
 //
     public void getting_SpeedBuff(){
+        if (runner.hitbox.intersects(speedBuff.hitbox)) {
+            System.out.println("Frodo Speed Buffed");
+            speedBuff.isAvailable = false;
+            for(int x = 1; x<1000; x++){
+                runner.dx = runner.dx + 10;
+                runner.dy = runner.dy + 10;
+            }
+        }
+        if (tag1.hitbox.intersects(speedBuff.hitbox)) {
+            System.out.println("Tagger 2 Speed Buffed");
+            speedBuff.isAvailable = false;
+            for(int x = 1; x<1000; x++){
+                tag1.dx = tag1.dx + 10;
+                tag1.dy = tag1.dy + 10;
+            }
+
+
+        }
+        if (tag2.hitbox.intersects(speedBuff.hitbox)) {
+            System.out.println("Tagger 1 Speed Buffed");
+            speedBuff.isAvailable = false;
+            for(int x = 1; x<1000; x++){
+                tag2.dx = tag2.dx + 10;
+                tag2.dy = tag2.dy + 10;
+            }
+
+        }
+    }
+
+    public void getting_SlowBuff(){
         if (runner.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Frodo Speed Buffed");
             speedBuff.isAvailable = false;
@@ -293,25 +339,39 @@ public class BasicGameApp implements Runnable {
             //draw backgroup first of all
 //            g.drawImage(forestPic, 0, 0, 1000, 800, null);
 
-            g.drawImage(RunnerPic, runner.xpos, runner.ypos, runner.width, runner.height, null);
-            g.drawRect(runner.hitbox.x, runner.hitbox.y, runner.hitbox.width, runner.hitbox.height);
+            //add lost life stuff in the render method!!!
 
-            //draw the image of the taggers and the forest backgrounds
-            g.drawImage(Tagger1Pic, tag1.xpos, tag1.ypos, tag1.width, tag1.height, null);
-            g.drawRect(tag1.hitbox.x, tag1.hitbox.y, tag1.hitbox.width, tag1.hitbox.height);
+            if(lost_life == 0) {
+                g.drawImage(RunnerPic, runner.xpos, runner.ypos, runner.width, runner.height, null);
+                g.drawRect(runner.hitbox.x, runner.hitbox.y, runner.hitbox.width, runner.hitbox.height);
 
-            g.drawImage(Tagger2Pic, tag2.xpos, tag2.ypos, tag1.width, tag1.height, null);
-            g.drawRect(tag2.hitbox.x, tag2.hitbox.y, tag2.hitbox.width, tag2.hitbox.height);
+                //draw the image of the taggers and the forest backgrounds
+                g.drawImage(Tagger1Pic, tag1.xpos, tag1.ypos, tag1.width, tag1.height, null);
+                g.drawRect(tag1.hitbox.x, tag1.hitbox.y, tag1.hitbox.width, tag1.hitbox.height);
 
-            //current issue, no response when characters interact with the freeze buff 2026/2/11
-            g.drawImage(FreezePic, freezeBuff.xpos, freezeBuff.ypos, freezeBuff.width, freezeBuff.height, null);
-            g.drawRect(freezeBuff.hitbox.x, freezeBuff.hitbox.y, freezeBuff.hitbox.width, freezeBuff.hitbox.height);
+                g.drawImage(Tagger2Pic, tag2.xpos, tag2.ypos, tag1.width, tag1.height, null);
+                g.drawRect(tag2.hitbox.x, tag2.hitbox.y, tag2.hitbox.width, tag2.hitbox.height);
 
-            //speed buff draw image
-            //slow buff draw image
+                //current issue, no response when characters interact with the freeze buff 2026/2/11
+                g.drawImage(FreezePic, freezeBuff.xpos, freezeBuff.ypos, freezeBuff.width, freezeBuff.height, null);
+                g.drawRect(freezeBuff.hitbox.x, freezeBuff.hitbox.y, freezeBuff.hitbox.width, freezeBuff.hitbox.height);
 
-            g.dispose();
 
-            bufferStrategy.show();
+                g.setColor(red);
+                g.drawString("Hi!",100,100);
+
+                //speed buff draw image
+                //slow buff draw image
+
+                g.dispose();
+
+                bufferStrategy.show();
+            } else if (lost_life == 1) {
+                //lost life animation
+            } else if (lost_life == 2) {
+                //lost life animation
+            }else{
+                //game over scene
+            }
         }
     }

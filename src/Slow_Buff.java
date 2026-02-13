@@ -1,8 +1,7 @@
 import java.awt.*;
 
 //adjust for slow buff
-
-public class Freeze_Buff {
+public class Slow_Buff {
 
     public int xpos;
     public int ypos;
@@ -13,8 +12,8 @@ public class Freeze_Buff {
     public static boolean isAvailable;
     public Rectangle hitbox;
 
-    public Freeze_Buff(int pXpos, int pYpos) {
-        //the freeze buff should randomize anywhere on the map at the start and after each time it is used
+    public Slow_Buff(int pXpos, int pYpos) {
+        //the slow buff should randomize anywhere on the map at the start and after each time it is used
 
         //using the randx and randy now in BGA to randomize position? Do I still need the pXpos and pYpos?
         xpos = pXpos;
