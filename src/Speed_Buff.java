@@ -8,7 +8,6 @@ public class Speed_Buff {
     public int dy;
     public int width;
     public int height;
-    public boolean isAvailable;
     public Rectangle hitbox;
 
     public Speed_Buff(int pXpos, int pYpos) {
@@ -19,7 +18,6 @@ public class Speed_Buff {
         dy = 15;
         width = 60;
         height = 60;
-        isAvailable = true;
         hitbox = new Rectangle(xpos, ypos, 55, 77);
     }
 
@@ -40,6 +38,6 @@ public class Speed_Buff {
         }
         xpos = xpos + dx;
         ypos = ypos + dy;
-        hitbox = new Rectangle(xpos, ypos, width, height);
+        hitbox = new Rectangle(xpos, ypos, 55, 60);
     }
 }

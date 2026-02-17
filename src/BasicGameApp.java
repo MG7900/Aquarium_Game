@@ -19,9 +19,6 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import static java.awt.Color.blue;
-import static java.awt.Color.red;
-
 
 //*******************************************************************************
 // Class Definition Section
@@ -49,8 +46,13 @@ public class BasicGameApp implements Runnable {
     public Image RunnerPic;
     public Image FreezePic;
     public Image SpeedPic;
-    public Image LifePic;
+    public Image BeginningPic;
+    public Image CapturedPic;
+    public Image EscapingPic;
+    public Image GameOverPic;
 
+    //time counter
+    public long startTime = System.currentTimeMillis();
 
     //Declare the objects used in the program
     //These are things that are made up of more than one variable type
@@ -59,7 +61,6 @@ public class BasicGameApp implements Runnable {
     public Runner runner;
     public Freeze_Buff freezeBuff;
     public Speed_Buff speedBuff;
-    public Slow_Buff slowBuff;
     public Life life;
     //public Slow_Buff slowBuff;
 
@@ -77,12 +78,14 @@ public class BasicGameApp implements Runnable {
     // This section is the setup portion of the program
     // Initialize your variables and construct your program objects here.
     public BasicGameApp() {
-        int randx = (int) (Math.random() * 600);
-        int randy = (int) (Math.random() * 600);
+        int randx = (int) (Math.random() * 700);
+        int randy = (int) (Math.random() * 1000);
         setUpGraphics();
+
 
         //variable and objects
         //create (construct) the objects needed for the game and load up
+
 
         forestPic = Toolkit.getDefaultToolkit().getImage("Forest.jpg");
         Tagger1Pic = Toolkit.getDefaultToolkit().getImage("Tagger_1.jpg");
@@ -90,35 +93,35 @@ public class BasicGameApp implements Runnable {
         RunnerPic = Toolkit.getDefaultToolkit().getImage("Frodo.jpg");
         FreezePic = Toolkit.getDefaultToolkit().getImage("Freeze.png");
         SpeedPic = Toolkit.getDefaultToolkit().getImage("Speed.png");
-        LifePic = Toolkit.getDefaultToolkit().getImage("Life.png");
+        //scenes below to be played
+        BeginningPic = Toolkit.getDefaultToolkit().getImage("Beginning.png");
+        CapturedPic = Toolkit.getDefaultToolkit().getImage("First Capture.png");
+        EscapingPic = Toolkit.getDefaultToolkit().getImage("Escaping.png");
+        GameOverPic = Toolkit.getDefaultToolkit().getImage("Game Over.png");
 
-        tag1 = new Tagger_1(250,100);
-        tag1.dx = 10;
-        tag1.dy = 10;
+        tag1 = new Tagger_1((int) (Math.random() * 600), (int) (Math.random() * 900));
+        tag1.dx = (int) (Math.random() * 5) - 3;
+        tag1.dy = (int) (Math.random() * 5) - 3;
 
-        tag2 = new Tagger_2(200, 600);
-        tag2.dx = -10;
-        tag2.dy = -10;
+        tag2 = new Tagger_2((int) (Math.random() * 600), (int) (Math.random() * 900));
+        tag2.dx = (int) (Math.random() * 5) - 3;
+        tag2.dy = (int) (Math.random() * 5) - 3;
 
-        runner = new Runner(100, 400);
-        runner.dx = 5;
+        runner = new Runner((int) (Math.random() * 600), (int) (Math.random() * 900));
+        runner.dx = (int) (Math.random() * 5) - 2;
         runner.dy = -5;
 
 
-        freezeBuff = new Freeze_Buff(randx, randy);
+        freezeBuff = new Freeze_Buff((int) (Math.random() * 600), (int) (Math.random() * 900));
         freezeBuff.dx = 5;
         freezeBuff.dy = 5;
-        //add stuff!!
 
-        slowBuff = new Slow_Buff(100,100);
-        slowBuff.dx = -5;
-        slowBuff.dy = -10;
 
-        life = new Life(50,50);
+        life = new Life();
 
-//        speedBuff = new Speed_Buff(200,200);
-
-        //slow Buff
+        speedBuff = new Speed_Buff(randx, randy);
+        speedBuff.dx = 5;
+        speedBuff.dy = 5;
 
     }// BasicGameApp()
 
@@ -131,13 +134,19 @@ public class BasicGameApp implements Runnable {
     // main thread
     // this is the code that plays the game after you set things up
     public void run() {
-
+        //starts the counter outside of loop to avoid infinite delay
+        long y = System.currentTimeMillis();
         //for the moment we will loop things forever.
         while (true) {
 
-            moveThings();  //move all the game objects
-            render();  // paint the graphics
-            pause(20); // sleep for 10 ms
+            long elapsedy = System.currentTimeMillis() - y;
+            render();
+
+            if (elapsedy > 3000) {
+
+                moveThings();  //move all the game objects
+                pause(20); // sleep for 10 ms
+            }
         }
     }
 
@@ -152,32 +161,30 @@ public class BasicGameApp implements Runnable {
 
         //Below are the buffs
         freezeBuff.move();
-        slowBuff.move();
         speedBuff.move();
-        getting_SlowBuff();
         getting_FreezeBuff();
         getting_SpeedBuff();
 
     }
 
     //below makes sure that the taggers would bounce off eachother
-    public void taggers_crashing(){
-        if(tag1.hitbox.intersects(tag2.hitbox)){
+    public void taggers_crashing() {
+        if (tag1.hitbox.intersects(tag2.hitbox)) {
             System.out.println("Taggers crashing!");
             System.out.println("Tag1: " + tag1.xpos + tag1.ypos);
             System.out.println("Tag2: " + tag2.xpos + tag2.ypos);
 
 
             //center the xpos and ypos of the objects intp the center
-            int x = Math.abs(tag1.xpos-tag2.xpos);
-            int y = Math.abs(tag1.ypos-tag2.ypos);
+            int x = Math.abs(tag1.xpos - tag2.xpos);
+            int y = Math.abs(tag1.ypos - tag2.ypos);
 
             //the taggers will bounce off of each other based on the direction they interact
-            if(x > y){
+            if (x > y) {
                 //here EXPLANATION
                 tag1.dx = -tag1.dx;
                 tag2.dx = -tag2.dx;
-            } else if ( x < y) {
+            } else if (x < y) {
                 //here EXPLANATION
                 tag1.dy = -tag1.dy;
                 tag2.dy = -tag2.dy;
@@ -195,15 +202,17 @@ public class BasicGameApp implements Runnable {
         }
     }
 
-//    //Below are the Buff effects and their interactions
+    //    //Below are the Buff effects and their interactions
 //
-    public void getting_FreezeBuff(){
+    public void getting_FreezeBuff() {
         if (runner.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Frodo gets Freeze Buff");
-            freezeBuff.isAvailable = false;
 
             //set a counter as a substitute for a timer
-            for(int t = 1; t < 100; t++) {
+            long u = System.currentTimeMillis();
+            long elapsedu = System.currentTimeMillis() - u;
+
+            if (elapsedu < 3000) {
                 runner.dx = 0;
                 runner.dy = 0;
             }
@@ -211,8 +220,10 @@ public class BasicGameApp implements Runnable {
         }
         if (tag1.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Tagger 1 gets Freeze Buff");
-            freezeBuff.isAvailable = false;
-            for(int t = 1; t < 100; t++) {
+            long m = System.currentTimeMillis();
+            long elapsedm = System.currentTimeMillis() - m;
+
+            if (elapsedm < 3000) {
                 tag1.dx = 0;
                 tag1.dy = 0;
             }
@@ -221,8 +232,10 @@ public class BasicGameApp implements Runnable {
         }
         if (tag2.hitbox.intersects(freezeBuff.hitbox)) {
             System.out.println("Tagger 2 gets Freeze Buff");
-            freezeBuff.isAvailable = false;
-            for(int t = 1; t < 100; t++) {
+            long j = System.currentTimeMillis();
+            long elapsedj = System.currentTimeMillis() - j;
+
+            if (elapsedj < 3000) {
                 tag2.dx = 0;
                 tag2.dy = 0;
             }
@@ -230,20 +243,25 @@ public class BasicGameApp implements Runnable {
 
         }
     }
-//
-    public void getting_SpeedBuff(){
+
+    //
+    public void getting_SpeedBuff() {
         if (runner.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Frodo Speed Buffed");
-            speedBuff.isAvailable = false;
-            for(int x = 1; x<1000; x++){
+            long d = System.currentTimeMillis();
+            long elapsedd = System.currentTimeMillis() - d;
+
+            if (elapsedd < 3000) {
                 runner.dx = runner.dx + 10;
                 runner.dy = runner.dy + 10;
             }
         }
         if (tag1.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Tagger 2 Speed Buffed");
-            speedBuff.isAvailable = false;
-            for(int x = 1; x<1000; x++){
+            long g = System.currentTimeMillis();
+            long elapsedg = System.currentTimeMillis() - g;
+
+            if (elapsedg < 3000) {
                 tag1.dx = tag1.dx + 10;
                 tag1.dy = tag1.dy + 10;
             }
@@ -252,8 +270,10 @@ public class BasicGameApp implements Runnable {
         }
         if (tag2.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Tagger 1 Speed Buffed");
-            speedBuff.isAvailable = false;
-            for(int x = 1; x<1000; x++){
+            long h = System.currentTimeMillis();
+            long elapsedh = System.currentTimeMillis() - h;
+
+            if (elapsedh < 3000) {
                 tag2.dx = tag2.dx + 10;
                 tag2.dy = tag2.dy + 10;
             }
@@ -261,87 +281,60 @@ public class BasicGameApp implements Runnable {
         }
     }
 
-    public void getting_SlowBuff(){
-        if (runner.hitbox.intersects(speedBuff.hitbox)) {
-            System.out.println("Frodo Speed Buffed");
-            speedBuff.isAvailable = false;
-            for(int x = 1; x<1000; x++){
-                runner.dx = runner.dx + 10;
-                runner.dy = runner.dy + 10;
-            }
-        }
-        if (tag1.hitbox.intersects(speedBuff.hitbox)) {
-            System.out.println("Tagger 2 Speed Buffed");
-            speedBuff.isAvailable = false;
-            for(int x = 1; x<1000; x++){
-                tag1.dx = tag1.dx + 10;
-                tag1.dy = tag1.dy + 10;
-            }
-
-
-        }
-        if (tag2.hitbox.intersects(speedBuff.hitbox)) {
-            System.out.println("Tagger 1 Speed Buffed");
-            speedBuff.isAvailable = false;
-            for(int x = 1; x<1000; x++){
-                tag2.dx = tag2.dx + 10;
-                tag2.dy = tag2.dy + 10;
-            }
+    //Pauses or sleeps the computer for the amount specified in milliseconds
+    public void pause(int time) {
+        //sleep
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
 
         }
     }
 
-        //Pauses or sleeps the computer for the amount specified in milliseconds
-        public void pause ( int time ){
-            //sleep
-            try {
-                Thread.sleep(time);
-            } catch (InterruptedException e) {
+    //Graphics setup method
+    private void setUpGraphics() {
+        frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
 
-            }
+        panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
+        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
+        panel.setLayout(null);   //set the layout
+
+        // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
+        // and trap input events (Mouse and Keyboard events)
+        canvas = new Canvas();
+        canvas.setBounds(0, 0, WIDTH, HEIGHT);
+        canvas.setIgnoreRepaint(true);
+
+        panel.add(canvas);  // adds the canvas to the panel.
+
+        // frame operations
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
+        frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
+        frame.setResizable(false);   //makes it so the frame cannot be resized
+        frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
+
+        // sets up things so the screen displays images nicely.
+        canvas.createBufferStrategy(2);
+        bufferStrategy = canvas.getBufferStrategy();
+        canvas.requestFocus();
+        System.out.println("DONE graphic setup");
+
+    }
+
+
+    //paints things on the screen using bufferStrategy
+    private void render() {
+        Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
+
+        //about a few seconds to show beginning game background
+        long elapsedz = System.currentTimeMillis() - startTime;
+
+        if (elapsedz < 3000) {
+            g.drawImage(BeginningPic, 0, 0, 1000, 800, null);
+        } else {
+            g.drawImage(forestPic, 0, 0, 1000, 800, null);
         }
-
-        //Graphics setup method
-        private void setUpGraphics () {
-            frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
-
-            panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
-            panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
-            panel.setLayout(null);   //set the layout
-
-            // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
-            // and trap input events (Mouse and Keyboard events)
-            canvas = new Canvas();
-            canvas.setBounds(0, 0, WIDTH, HEIGHT);
-            canvas.setIgnoreRepaint(true);
-
-            panel.add(canvas);  // adds the canvas to the panel.
-
-            // frame operations
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
-            frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
-            frame.setResizable(false);   //makes it so the frame cannot be resized
-            frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
-
-            // sets up things so the screen displays images nicely.
-            canvas.createBufferStrategy(2);
-            bufferStrategy = canvas.getBufferStrategy();
-            canvas.requestFocus();
-            System.out.println("DONE graphic setup");
-
-        }
-
-
-        //paints things on the screen using bufferStrategy
-        private void render () {
-            Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-            g.clearRect(0, 0, WIDTH, HEIGHT);
-            //draw backgroup first of all
-//            g.drawImage(forestPic, 0, 0, 1000, 800, null);
-
-            //add lost life stuff in the render method!!!
-
-            if(lost_life == 0) {
+            if (life.lost_life == 0) {
                 g.drawImage(RunnerPic, runner.xpos, runner.ypos, runner.width, runner.height, null);
                 g.drawRect(runner.hitbox.x, runner.hitbox.y, runner.hitbox.width, runner.hitbox.height);
 
@@ -357,21 +350,17 @@ public class BasicGameApp implements Runnable {
                 g.drawRect(freezeBuff.hitbox.x, freezeBuff.hitbox.y, freezeBuff.hitbox.width, freezeBuff.hitbox.height);
 
 
-                g.setColor(red);
-                g.drawString("Hi!",100,100);
+                g.drawImage(SpeedPic, speedBuff.xpos, speedBuff.ypos, speedBuff.width, speedBuff.height, null);
+                g.drawRect(speedBuff.hitbox.x, speedBuff.hitbox.y, speedBuff.hitbox.width, speedBuff.hitbox.height);
 
-                //speed buff draw image
-                //slow buff draw image
-
-                g.dispose();
-
-                bufferStrategy.show();
-            } else if (lost_life == 1) {
-                //lost life animation
-            } else if (lost_life == 2) {
-                //lost life animation
-            }else{
-                //game over scene
+            } else {
+                //clear everything and draw game over
+                g.clearRect(0, 0, WIDTH, HEIGHT);
+                g.drawImage(GameOverPic, 0, 0, WIDTH, HEIGHT, null);
             }
+            g.dispose();
+            bufferStrategy.show();
         }
-    }
+
+}
+

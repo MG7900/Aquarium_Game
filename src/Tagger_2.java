@@ -18,8 +18,8 @@ public class Tagger_2 {
         ypos = pYpos;
         dx = 10;
         dy = 10;
-        width = 110;
-        height = 110;
+        width = 100;
+        height = 100;
         hitbox = new Rectangle(xpos, ypos, 120, 120);
     }
 
@@ -35,6 +35,6 @@ public class Tagger_2 {
 
         xpos = xpos + dx;
         ypos = ypos + dy;
-        hitbox = new Rectangle(xpos, ypos, 80, 80);
+        hitbox = new Rectangle(xpos, ypos, 70, 70);
     }
 }

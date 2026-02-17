@@ -8,7 +8,6 @@ public class Freeze_Buff {
     public int dy;
     public int width;
     public int height;
-    public static boolean isAvailable;
     public Rectangle hitbox;
 
     public Freeze_Buff(int pXpos, int pYpos) {
@@ -21,7 +20,6 @@ public class Freeze_Buff {
         dy = (int) (Math.random() * 10)+1;
         width = 60;
         height = 60;
-        isAvailable = true;
         hitbox = new Rectangle(xpos, ypos, 60, 60);
     }
 

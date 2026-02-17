@@ -16,8 +16,8 @@ public class Tagger_1 {
         ypos = pYpos;
         dx = 1;
         dy = 0;
-        width = 90;
-        height = 90;
+        width = 70;
+        height = 70;
         hitbox = new Rectangle(xpos, ypos, 90, 90);
     }
 
@@ -37,8 +37,5 @@ public class Tagger_1 {
         ypos = ypos + dy;
         hitbox = new Rectangle(xpos+15, ypos, 60, 80);
     }
-
-
-
 
 }
