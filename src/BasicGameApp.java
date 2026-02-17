@@ -99,27 +99,28 @@ public class BasicGameApp implements Runnable {
 //        EscapingPic = Toolkit.getDefaultToolkit().getImage("Escaping.png");
         GameOverPic = Toolkit.getDefaultToolkit().getImage("Game Over.png");
 
-        tag1 = new Tagger_1((int) (Math.random() * 700), (int) (Math.random() * 500));
+        tag1 = new Tagger_1(700,500);
+        tag1.dx = (int) (Math.random() * 5) - 3;
         tag1.dy = (int) (Math.random() * 5) - 3;
 
-        tag2 = new Tagger_2((int) (Math.random() * 600), (int) (Math.random() * 500));
+        tag2 = new Tagger_2(700,100);
         tag2.dx = (int) (Math.random() * 5) - 3;
         tag2.dy = (int) (Math.random() * 5) - 3;
 
-        runner = new Runner((int) (Math.random() * 600), (int) (Math.random() * 700));
+        runner = new Runner(0, 100);
         runner.dx = (int) (Math.random() * 5) - 2;
         runner.dy = -5;
 
 
-        freezeBuff = new Freeze_Buff((int) (Math.random() * 600), (int) (Math.random() * 700));
+        freezeBuff = new Freeze_Buff((int) (Math.random() * 600), (int) (Math.random() * 500));
         freezeBuff.dx = 5;
         freezeBuff.dy = (int) (Math.random() * 5) - 3;
 
 
         life = new Life();
 
-        speedBuff = new Speed_Buff((int) (Math.random() * 600), (int) (Math.random() * 700));
-        speedBuff.dx = (int) (Math.random() * 5) - 3;
+        speedBuff = new Speed_Buff((int) (Math.random() * 600), (int) (Math.random() * 500));
+        speedBuff.dx = (int) (Math.random() * 5) + 5;
         speedBuff.dy = 5;
 
     }// BasicGameApp()
