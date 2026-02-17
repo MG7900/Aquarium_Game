@@ -106,19 +106,19 @@ public class BasicGameApp implements Runnable {
         tag2.dx = (int) (Math.random() * 5) - 3;
         tag2.dy = (int) (Math.random() * 5) - 3;
 
-        runner = new Runner((int) (Math.random() * 800), (int) (Math.random() * 700));
+        runner = new Runner((int) (Math.random() * 600), (int) (Math.random() * 700));
         runner.dx = (int) (Math.random() * 5) - 2;
         runner.dy = -5;
 
 
-        freezeBuff = new Freeze_Buff((int) (Math.random() * 800), (int) (Math.random() * 700));
+        freezeBuff = new Freeze_Buff((int) (Math.random() * 600), (int) (Math.random() * 700));
         freezeBuff.dx = 5;
         freezeBuff.dy = (int) (Math.random() * 5) - 3;
 
 
         life = new Life();
 
-        speedBuff = new Speed_Buff((int) (Math.random() * 800), (int) (Math.random() * 700));
+        speedBuff = new Speed_Buff((int) (Math.random() * 600), (int) (Math.random() * 700));
         speedBuff.dx = (int) (Math.random() * 5) - 3;
         speedBuff.dy = 5;
 
