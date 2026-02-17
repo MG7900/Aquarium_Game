@@ -23,18 +23,12 @@ public class Speed_Buff {
 
     public void move(){
         //ths freeze buff also wraps around the map
-        if(ypos > 700){
-            ypos = 0;
-        }
-        if(ypos < 0){
-            ypos = 700;
+        if(xpos < 0 || xpos > 950){
+            dx = -dx;
         }
 
-        if(xpos > 850){
-            xpos = 0;
-        }
-        if(xpos < 0){
-            xpos = 850;
+        if(ypos < 0 || ypos > 620){
+            dy = -dy;
         }
         xpos = xpos + dx;
         ypos = ypos + dy;

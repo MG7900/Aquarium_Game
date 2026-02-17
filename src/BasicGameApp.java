@@ -95,32 +95,31 @@ public class BasicGameApp implements Runnable {
         SpeedPic = Toolkit.getDefaultToolkit().getImage("Speed.png");
         //scenes below to be played
         BeginningPic = Toolkit.getDefaultToolkit().getImage("Beginning.png");
-        CapturedPic = Toolkit.getDefaultToolkit().getImage("First Capture.png");
-        EscapingPic = Toolkit.getDefaultToolkit().getImage("Escaping.png");
+//        CapturedPic = Toolkit.getDefaultToolkit().getImage("First Capture.png");
+//        EscapingPic = Toolkit.getDefaultToolkit().getImage("Escaping.png");
         GameOverPic = Toolkit.getDefaultToolkit().getImage("Game Over.png");
 
-        tag1 = new Tagger_1((int) (Math.random() * 600), (int) (Math.random() * 900));
-        tag1.dx = (int) (Math.random() * 5) - 3;
+        tag1 = new Tagger_1((int) (Math.random() * 700), (int) (Math.random() * 500));
         tag1.dy = (int) (Math.random() * 5) - 3;
 
-        tag2 = new Tagger_2((int) (Math.random() * 600), (int) (Math.random() * 900));
+        tag2 = new Tagger_2((int) (Math.random() * 600), (int) (Math.random() * 500));
         tag2.dx = (int) (Math.random() * 5) - 3;
         tag2.dy = (int) (Math.random() * 5) - 3;
 
-        runner = new Runner((int) (Math.random() * 600), (int) (Math.random() * 900));
+        runner = new Runner((int) (Math.random() * 800), (int) (Math.random() * 700));
         runner.dx = (int) (Math.random() * 5) - 2;
         runner.dy = -5;
 
 
-        freezeBuff = new Freeze_Buff((int) (Math.random() * 600), (int) (Math.random() * 900));
+        freezeBuff = new Freeze_Buff((int) (Math.random() * 800), (int) (Math.random() * 700));
         freezeBuff.dx = 5;
-        freezeBuff.dy = 5;
+        freezeBuff.dy = (int) (Math.random() * 5) - 3;
 
 
         life = new Life();
 
-        speedBuff = new Speed_Buff(randx, randy);
-        speedBuff.dx = 5;
+        speedBuff = new Speed_Buff((int) (Math.random() * 800), (int) (Math.random() * 700));
+        speedBuff.dx = (int) (Math.random() * 5) - 3;
         speedBuff.dy = 5;
 
     }// BasicGameApp()
@@ -252,8 +251,8 @@ public class BasicGameApp implements Runnable {
             long elapsedd = System.currentTimeMillis() - d;
 
             if (elapsedd < 3000) {
-                runner.dx = runner.dx + 10;
-                runner.dy = runner.dy + 10;
+                runner.dx = runner.dx + 5;
+                runner.dy = runner.dy + 3;
             }
         }
         if (tag1.hitbox.intersects(speedBuff.hitbox)) {
@@ -262,8 +261,8 @@ public class BasicGameApp implements Runnable {
             long elapsedg = System.currentTimeMillis() - g;
 
             if (elapsedg < 3000) {
-                tag1.dx = tag1.dx + 10;
-                tag1.dy = tag1.dy + 10;
+                tag1.dx = tag1.dx + 3;
+                tag1.dy = tag1.dy + 4;
             }
 
 
@@ -274,8 +273,8 @@ public class BasicGameApp implements Runnable {
             long elapsedh = System.currentTimeMillis() - h;
 
             if (elapsedh < 3000) {
-                tag2.dx = tag2.dx + 10;
-                tag2.dy = tag2.dy + 10;
+                tag2.dx = tag2.dx + 3;
+                tag2.dy = tag2.dy + 3;
             }
 
         }
@@ -342,13 +341,12 @@ public class BasicGameApp implements Runnable {
                 g.drawImage(Tagger1Pic, tag1.xpos, tag1.ypos, tag1.width, tag1.height, null);
                 g.drawRect(tag1.hitbox.x, tag1.hitbox.y, tag1.hitbox.width, tag1.hitbox.height);
 
-                g.drawImage(Tagger2Pic, tag2.xpos, tag2.ypos, tag1.width, tag1.height, null);
+                g.drawImage(Tagger2Pic, tag2.xpos, tag2.ypos, tag2.width, tag2.height, null);
                 g.drawRect(tag2.hitbox.x, tag2.hitbox.y, tag2.hitbox.width, tag2.hitbox.height);
 
                 //current issue, no response when characters interact with the freeze buff 2026/2/11
                 g.drawImage(FreezePic, freezeBuff.xpos, freezeBuff.ypos, freezeBuff.width, freezeBuff.height, null);
                 g.drawRect(freezeBuff.hitbox.x, freezeBuff.hitbox.y, freezeBuff.hitbox.width, freezeBuff.hitbox.height);
-
 
                 g.drawImage(SpeedPic, speedBuff.xpos, speedBuff.ypos, speedBuff.width, speedBuff.height, null);
                 g.drawRect(speedBuff.hitbox.x, speedBuff.hitbox.y, speedBuff.hitbox.width, speedBuff.hitbox.height);
