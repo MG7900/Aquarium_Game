@@ -248,35 +248,22 @@ public class BasicGameApp implements Runnable {
     public void getting_SpeedBuff() {
         if (runner.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Frodo Speed Buffed");
-            long d = System.currentTimeMillis();
-            long elapsedd = System.currentTimeMillis() - d;
-
-            if (elapsedd < 3000) {
-                runner.dx = runner.dx + 5;
+                runner.dx = runner.dx + 2;
                 runner.dy = runner.dy + 3;
-            }
+
         }
         if (tag1.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Tagger 2 Speed Buffed");
-            long g = System.currentTimeMillis();
-            long elapsedg = System.currentTimeMillis() - g;
 
-            if (elapsedg < 3000) {
-                tag1.dx = tag1.dx + 3;
-                tag1.dy = tag1.dy + 4;
-            }
-
+                tag1.dx = tag1.dx + 2;
+                tag1.dy = tag1.dy + 2;
 
         }
         if (tag2.hitbox.intersects(speedBuff.hitbox)) {
             System.out.println("Tagger 1 Speed Buffed");
-            long h = System.currentTimeMillis();
-            long elapsedh = System.currentTimeMillis() - h;
 
-            if (elapsedh < 3000) {
                 tag2.dx = tag2.dx + 3;
                 tag2.dy = tag2.dy + 3;
-            }
 
         }
     }
